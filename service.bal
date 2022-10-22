@@ -23,6 +23,8 @@ type Country record {
     string flagPic;
     # Flag in unicode
     string flag;
+    # Currency code
+    string currency;
 };
 
 # Represents a subdivion with in a country
@@ -65,7 +67,8 @@ service / on new http:Listener(9090) {
                 coordinates: res[0].latlng,
                 population: res[0].population,
                 flagPic: string `/country/${res[0].cca2.toLowerAscii()}/flag`,
-                flag: res[0].flag
+                flag: res[0].flag,
+                currency: currencyCodes[code] ?: "unknown"
             };
             return country;
         }
