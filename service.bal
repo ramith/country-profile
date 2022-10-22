@@ -59,7 +59,7 @@ service / on new http:Listener(9090) {
             } name;
 
         }[] res = check countryEndpoint->get(string `v3.1/alpha/${code}`);
-
+        
         if res.length() > 0 {
             Country country = {
                 code: res[0].cca2,
@@ -68,7 +68,7 @@ service / on new http:Listener(9090) {
                 population: res[0].population,
                 flagPic: string `/country/${res[0].cca2.toLowerAscii()}/flag`,
                 flag: res[0].flag,
-                currency: currencyCodes[code] ?: "unknown"
+                currency: currencyCodes[code.toUpperAscii()] ?: "unknown"
             };
             return country;
         }
