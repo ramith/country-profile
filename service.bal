@@ -124,15 +124,10 @@ service / on new http:Listener(9090) {
         return subs;
     }
 
-    resource function get country/[string code]/currency() returns Currency|error? {
+    resource function get currency/[string code]() returns Currency|error? {
 
         log:printInfo("get currency information for country: " + code);
-
-        string? currencyCode = currencyCodes[code.toUpperAscii()];
-        if currencyCode is () {
-            return ();
-        }
-        Currency currency = currencyMap.get(currencyCode);
+        Currency currency = currencyMap.get(code.toUpperAscii());
         return currency;
     }
 
