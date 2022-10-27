@@ -144,6 +144,11 @@ service / on new http:Listener(9090) {
             symbolAltNarrow: currency.symbolAltNarrow ?: ""
         };
     }
+
+    resource function get health() returns string? {
+        return "OK";
+    }
+
 }
 
 # Utility function to get a flag from 3rd party api
