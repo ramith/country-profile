@@ -1,3 +1,5 @@
+# source : https://github.com/unicode-org/cldr-json/blob/main/cldr-json/cldr-numbers-modern/main/en/currencies.json
+
 type Currency record {
     string displayName;
     string displayNameCountOne;
