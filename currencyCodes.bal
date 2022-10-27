@@ -1,4 +1,3 @@
-
 map<string> currencyCodes = {
     "NZ": "NZD",
     "CK": "NZD",

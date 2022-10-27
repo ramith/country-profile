@@ -36,7 +36,7 @@ type SubDivision record {
 };
 
 # Represents a currency used in a country
-type CurrencyInfo record {
+type Currency record {
     # Display name of the currency
     string displayName;
     # Display name of the single unit of currency
@@ -46,7 +46,7 @@ type CurrencyInfo record {
     # Currency code
     string symbol;
     # Narrow symbol of the currency
-    string symbolAltNarrow;
+    string symbolAltNarrow = "";
 };
 
 http:Client flagEndpoint = check new ("https://flagcdn.com");
@@ -124,7 +124,7 @@ service / on new http:Listener(9090) {
         return subs;
     }
 
-    resource function get country/[string code]/currency() returns CurrencyInfo|error? {
+    resource function get country/[string code]/currency() returns Currency|error? {
 
         log:printInfo("get currency information for country: " + code);
 
@@ -133,13 +133,7 @@ service / on new http:Listener(9090) {
             return ();
         }
         Currency currency = currencyMap.get(currencyCode);
-        return {
-            displayName: currency.displayName,
-            displayNameCountOne: currency.displayNameCountOne,
-            displayNameCountOther: currency.displayNameCountOther,
-            symbol: currency.symbol,
-            symbolAltNarrow: currency.symbolAltNarrow ?: ""
-        };
+        return currency;
     }
 
     resource function get health() returns string? {
