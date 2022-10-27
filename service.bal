@@ -37,8 +37,6 @@ type SubDivision record {
 
 # Represents a currency used in a country
 type CurrencyInfo record {
-    # Country code
-    string countryCode;
     # Display name of the currency
     string displayName;
     # Display name of the single unit of currency
@@ -136,7 +134,6 @@ service / on new http:Listener(9090) {
         }
         Currency currency = currencyMap.get(currencyCode);
         return {
-            countryCode: code.toUpperAscii(),
             displayName: currency.displayName,
             displayNameCountOne: currency.displayNameCountOne,
             displayNameCountOther: currency.displayNameCountOther,
