@@ -35,6 +35,15 @@ type SubDivision record {
     string name;
 };
 
+type CurrencyInfo record {
+    string countryCode;
+    string displayName;
+    string displayNameCountOne;
+    string displayNameCountOther;
+    string symbol;
+    string symbolAltNarrow;
+};
+
 http:Client flagEndpoint = check new ("https://flagcdn.com");
 http:Client countryEndpoint = check new ("https://restcountries.com/");
 
@@ -59,7 +68,7 @@ service / on new http:Listener(9090) {
             } name;
 
         }[] res = check countryEndpoint->get(string `v3.1/alpha/${code}`);
-        
+
         if res.length() > 0 {
             Country country = {
                 code: res[0].cca2,
@@ -108,6 +117,25 @@ service / on new http:Listener(9090) {
                 subs.push(result);
             };
         return subs;
+    }
+
+    resource function get country/[string code]/currency() returns CurrencyInfo|error? {
+
+        log:printInfo("get currency information for country: " + code);
+
+        string? currencyCode = currencyCodes[code.toUpperAscii()];
+        if currencyCode is () {
+            return ();
+        }
+        Currency currency = currencyMap.get(currencyCode);
+        return {
+            countryCode: code.toUpperAscii(),
+            displayName: currency.displayName,
+            displayNameCountOne: currency.displayNameCountOne,
+            displayNameCountOther: currency.displayNameCountOther,
+            symbol: currency.symbol,
+            symbolAltNarrow: currency.symbolAltNarrow ?: ""
+        };
     }
 }
 
