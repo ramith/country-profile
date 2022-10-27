@@ -35,12 +35,19 @@ type SubDivision record {
     string name;
 };
 
+# Represents a currency used in a country
 type CurrencyInfo record {
+    # Country code
     string countryCode;
+    # Display name of the currency
     string displayName;
+    # Display name of the single unit of currency
     string displayNameCountOne;
+    # Display name of the multiple units of currency
     string displayNameCountOther;
+    # Currency code
     string symbol;
+    # Narrow symbol of the currency
     string symbolAltNarrow;
 };
 
